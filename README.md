@@ -40,6 +40,7 @@ Alerts go only to the people the patient's family chooses.
 | Part | Tools |
 | --- | --- |
 | App | TypeScript, React Native, Expo SDK 58, Expo Router |
+| Languages | Spanish by default, full English version (build with `EXPO_PUBLIC_LANG=en`) |
 | Map | Leaflet + OpenStreetMap in react-native-webview (free, no API key); home locations taken once with expo-location |
 | Phone features | expo-battery (charger state), expo-notifications (alarm channel, exact alarms), expo-background-task, expo-audio, expo-secure-store |
 | Server | Supabase (Postgres + Deno edge functions), pg_cron |

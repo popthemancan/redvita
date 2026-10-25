@@ -28,12 +28,16 @@ EXPO_PUBLIC_DEMO=1 EXPO_PUBLIC_API_URL=http://localhost:8787/api npx expo start 
 $env:EXPO_PUBLIC_DEMO="1"; $env:EXPO_PUBLIC_API_URL="http://localhost:8787/api"; npx expo start --web
 ```
 
+The app starts in Spanish, its default language. To see it in English, add `EXPO_PUBLIC_LANG=en` to the command above.
+
 Then open two tabs (Chrome works best; make each window narrow, or use the phone view in DevTools):
 
 - Patient's phone: http://localhost:8081/?phone=patient
 - Family's phone: http://localhost:8081/?phone=family
 
 ## Try it
+
+The button names below are from the English version.
 
 1. **Patient tab:** pick "The person who needs the power", type a name, pick what they need power for, tap "Mark the house on the map", then "Create". Note the 6-digit code, then tap "Start".
 2. **Family tab:** pick "A family member, neighbor or caregiver", type the code and your name, then "Connect".

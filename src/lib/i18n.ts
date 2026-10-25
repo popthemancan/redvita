@@ -1,7 +1,7 @@
 export type Lang = "es" | "en";
 
-export const lang = "en" as Lang;
-export const locale = "en-US";
+export const lang: Lang = process.env.EXPO_PUBLIC_LANG === "en" ? "en" : "es";
+export const locale = lang === "es" ? "es-PR" : "en-US";
 
 const es = {
   common: {
