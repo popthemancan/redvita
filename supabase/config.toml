@@ -1,0 +1,9 @@
+project_id = "redvita"
+
+# Both functions do their own auth (device secrets / watchdog secret),
+# so Supabase's JWT check is turned off for them.
+[functions.api]
+verify_jwt = false
+
+[functions.watchdog]
+verify_jwt = false

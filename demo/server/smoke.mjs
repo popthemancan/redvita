@@ -1,0 +1,23 @@
+const API = "http://localhost:8787";
+const call = async (action, body = {}) => {
+  const r = await fetch(`${API}/api`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ action, ...body }) });
+  const j = await r.json();
+  if (!r.ok) throw new Error(`${action} ${r.status} ${JSON.stringify(j)}`);
+  return j;
+};
+await fetch(`${API}/reset`, { method: "POST" });
+const p = await call("register_patient", { name: "Carmen", need: "oxygen", phone: "787-555-0142", lat: 18.4, lng: -66.06, pushToken: "ExponentPushToken[demo-patient]", lang: "en" });
+const c = await call("register_contact", { linkCode: p.linkCode, name: "Ana", phone: "787-555-0199", lat: 18.42, lng: -66.1, pushToken: "ExponentPushToken[demo-family]", lang: "en" });
+await call("report_outage", { contactId: c.contactId, secret: c.secret });
+const s1 = await call("family_status", { links: [c] });
+console.log("after outage:", s1.patients[0].waiting, s1.patients[0].outageStartedAt !== null);
+await call("checkin", { patientId: p.patientId, secret: p.secret });
+const s2 = await call("family_status", { links: [c] });
+console.log("after checkin: waiting", s2.patients[0].waiting, "next", s2.patients[0].nextCheckinAt);
+await call("request_checkin", { contactId: c.contactId, secret: c.secret });
+console.log("asked; waiting 70 s for the watchdog...");
+await new Promise((ok) => setTimeout(ok, 70_000));
+const s3 = await call("family_status", { links: [c] });
+console.log("alert:", s3.patients[0].alert);
+const st = await (await fetch(`${API}/state`)).json();
+for (const l of st.log) console.log(new Date(l.at).toISOString().slice(11, 19), l.kind, l.token ?? l.to, l.title ?? "", "|", l.body);
